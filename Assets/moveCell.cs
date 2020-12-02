@@ -5,11 +5,13 @@ using UnityEngine.UI;
 
 public class moveCell : MonoBehaviour
 {
+    public float pontos;
+    public GameObject camera;
     public float speed;
     private int points;
     public Text pointsLabel;
     private Rigidbody rb;
-
+    private Vector3 scaleChange, cameraPos;
     void Start() {
         points = 0;
         pointsLabel.text = "Pontos: " + points.ToString ();
@@ -22,7 +24,7 @@ public class moveCell : MonoBehaviour
 
         Vector3 movement = new Vector3 (moveHorizontal, 1, moveVertical);
 
-        rb.AddForce (movement * speed);        
+        rb.AddForce (movement * speed); 
     }
 
     void OnTriggerEnter(Collider other) {
@@ -34,6 +36,10 @@ public class moveCell : MonoBehaviour
             Destroy(other.gameObject);
             points++;
             pointsLabel.text = "Pontos: " + points.ToString ();
+            scaleChange = new Vector3(pontos, pontos, pontos);
+            rb.transform.localScale += scaleChange;
+            cameraPos = new Vector3 (0, pontos, 0);
+            // camera.transform.position += cameraPos;
         }
     }
 }
